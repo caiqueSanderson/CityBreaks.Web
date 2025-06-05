@@ -4,7 +4,76 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 2rem;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 2rem;
+    }
+
+    .city-block {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease;
+    }
+
+    .city-block:hover {
+        transform: translateY(-2px);
+    }
+
+    .city-block h2 {
+        margin-top: 0;
+        font-size: 1.5rem;
+        color: #2c3e50;
+    }
+
+    .city-block ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 1rem;
+    }
+
+    .city-block li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .city-block li:last-child {
+        border-bottom: none;
+    }
+
+    .city-block li strong {
+        color: #000;
+    }
+</style>
+
+
+<h1>Cidades</h1>
+
+@foreach (var city in Model.Cities)
+{
+    <div class="city-block">
+        <h2>@city.Name (@city.Country.CountryName)</h2>
+        <ul>
+            @foreach (var property in city.Properties)
+            {
+                <li>
+                    <strong>@property.Name</strong> - R$ @property.PricePerNight
+                </li>
+            }
+        </ul>
+    </div>
+}

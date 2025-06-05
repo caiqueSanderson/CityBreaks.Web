@@ -1,4 +1,5 @@
 using CityBreaks.Web.Data;
+using CityBreaks.Web.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,9 @@ builder.Services.AddDbContext<CityBreaksContext>(options =>
     );
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<ICityService, CityService>();
+
 
 var app = builder.Build();
 
