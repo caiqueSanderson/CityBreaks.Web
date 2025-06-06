@@ -4,20 +4,79 @@
 	ViewData["Title"] = $"Detalhes de {Model.City?.Name}";
 }
 
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 2rem;
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .properties-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.5rem;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    .property-card {
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        transition: transform 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+        .property-card:hover {
+            transform: translateY(-4px);
+        }
+
+    .property-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #34495e;
+    }
+
+    .property-price {
+        font-size: 1rem;
+        color: #16a085;
+    }
+
+    .no-properties {
+        text-align: center;
+        font-size: 1.1rem;
+        color: #7f8c8d;
+    }
+</style>
+
+
 <h1>@Model.City?.Name (@Model.City?.Country?.CountryName)</h1>
 
 @if (Model.City?.Properties?.Any() ?? false)
 {
-    <ul>
+    <div class="properties-container">
         @foreach (var property in Model.City.Properties)
         {
-            <li>
-                <strong>@property.Name</strong> – R$ @property.PricePerNight
-            </li>
+            <div class="property-card">
+                <div class="property-name">@property.Name</div>
+                <div class="property-price">R$ @property.PricePerNight</div>
+            </div>
         }
-    </ul>
+    </div>
 }
 else
 {
-    <p>Nenhuma propriedade cadastrada para esta cidade.</p>
+    <p class="no-properties">Nenhuma propriedade cadastrada para esta cidade.</p>
 }
