@@ -5,60 +5,90 @@
 }
 
 <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f4f6f8;
-        margin: 0;
-        padding: 2rem;
-    }
+	body {
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		background-color: #f4f6f8;
+		margin: 0;
+		padding: 2rem;
+	}
 
-    h1 {
-        color: #2c3e50;
-        font-size: 2rem;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+	h1 {
+		color: #2c3e50;
+		font-size: 2rem;
+		text-align: center;
+		margin-bottom: 2rem;
+	}
 
-    .properties-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 1.5rem;
-        padding: 0;
-        margin: 0 auto;
-        max-width: 1000px;
-    }
+	.properties-container {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1.5rem;
+		padding: 0;
+		margin: 0 auto;
+		max-width: 1000px;
+	}
 
-    .property-card {
-        background-color: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        padding: 1.5rem;
-        transition: transform 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+	.property-card {
+		background-color: #ffffff;
+		border-radius: 16px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		padding: 1.5rem;
+		transition: transform 0.2s ease;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
 
-        .property-card:hover {
-            transform: translateY(-4px);
-        }
+		.property-card:hover {
+			transform: translateY(-4px);
+		}
 
-    .property-name {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #34495e;
-    }
+	.property-name {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #34495e;
+	}
 
-    .property-price {
-        font-size: 1rem;
-        color: #16a085;
-    }
+	.property-price {
+		font-size: 1rem;
+		color: #16a085;
+	}
 
-    .no-properties {
-        text-align: center;
-        font-size: 1.1rem;
-        color: #7f8c8d;
-    }
+	.no-properties {
+		text-align: center;
+		font-size: 1.1rem;
+		color: #7f8c8d;
+	}
+
+	.btn {
+		padding: 0.5rem 1rem;
+		margin-right: 0.5rem;
+		border-radius: 8px;
+		border: none;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+		width: 100%;
+	}
+
+	.btn-primary {
+		background-color: #3498db;
+		color: white;
+	}
+
+	.btn-danger {
+		background-color: #e74c3c;
+		color: white;
+	}
+
+	.btn:hover {
+		opacity: 0.9;
+	}
+
+	form{
+		all: unset;
+	}
+
 </style>
 
 
@@ -66,17 +96,24 @@
 
 @if (Model.City?.Properties?.Any() ?? false)
 {
-    <div class="properties-container">
-        @foreach (var property in Model.City.Properties)
-        {
-            <div class="property-card">
-                <div class="property-name">@property.Name</div>
-                <div class="property-price">R$ @property.PricePerNight</div>
-            </div>
-        }
-    </div>
+	<div class="properties-container">
+		@foreach (var property in Model.City.Properties)
+		{
+			<div class="property-card">
+				<div class="property-name">@property.Name</div>
+				<div class="property-price">R$ @property.PricePerNight</div>
+
+				<a asp-page="/EditProperty" asp-route-id="@property.Id" class="btn btn-primary btn-sm">Editar</a>
+
+				<form method="post" asp-page-handler="Delete" asp-route-id="@property.Id"
+					  style="display:inline;" onsubmit="return confirm('Deseja excluir esta propriedade?');">
+					<button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+				</form>
+			</div>
+		}
+	</div>
 }
 else
 {
-    <p class="no-properties">Nenhuma propriedade cadastrada para esta cidade.</p>
+	<p class="no-properties">Nenhuma propriedade cadastrada para esta cidade.</p>
 }
